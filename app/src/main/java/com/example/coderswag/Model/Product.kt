@@ -1,4 +1,4 @@
 package com.example.coderswag.Model
 
-class Product {
+class Product(val title:String, val price:String, val image:String) {
 }
