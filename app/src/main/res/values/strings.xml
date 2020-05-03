@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">coderswag</string>
-    <string name="my_brothers_names">my brothers names</string>
+    <string name="my_brothers_names">Categories</string>
     <string name="cat">Categories</string>
 </resources>
