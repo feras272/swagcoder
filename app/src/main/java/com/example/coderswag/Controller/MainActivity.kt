@@ -2,16 +2,23 @@ package com.example.coderswag.Controller
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
+import android.provider.ContactsContract
+import android.widget.GridLayout
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.coderswag.Adapters.CategoryAdapter
-import com.example.coderswag.Model.Category
+import com.example.coderswag.Adapters.CategoryRecycleAdapter
 import com.example.coderswag.R
 import com.example.coderswag.Servieces.DataService
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
-    lateinit var adapter : CategoryAdapter
+    lateinit var adapter : CategoryRecycleAdapter
 
 
 
@@ -19,10 +26,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = CategoryAdapter(this, DataService.catogaries)
-//        = ArrayAdapter(this, android.R.layout.simple_list_item_1, DataService.catogaries)
-        categoryList.adapter = adapter
+        adapter = CategoryRecycleAdapter(this,DataService.catogaries)
+        categoryListID.adapter = adapter
 
+        val layoutManager = LinearLayoutManager(this)
+        categoryListID.layoutManager = layoutManager
+        categoryListID.setHasFixedSize(true)
+
+
+//        = ArrayAdapter(this, android.R.layout.simple_list_item_1, DataService.catogaries)
+//        categoryListID.adapter = adapter
+//
+//        categoryListID.setOnItemClickListener { adapterView, view, i, l ->
+//            val simpleCategory = DataService.catogaries[i]
+//            Toast.makeText(this,"You clicked on the ${simpleCategory.title} item",Toast.LENGTH_SHORT).show()
+//        }
 
     }
 }
