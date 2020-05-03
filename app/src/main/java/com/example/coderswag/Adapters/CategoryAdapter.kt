@@ -17,17 +17,36 @@ class CategoryAdapter(context: Context, data:List<Category>) : BaseAdapter() {
     val theContext = context
     val theData = data
 
-    override fun getView(position: Int, p1: View?, p2: ViewGroup?): View {
+
+//------------------------  RECYCLING THE ITEMS --------------------------------------
+    override fun getView(position: Int, convertView: View?, p2: ViewGroup?): View {
         val adapterInflat: View
-        adapterInflat = LayoutInflater.from(theContext).inflate(R.layout.list_row,null)
-        val theCategoryImage: ImageView = adapterInflat.findViewById(R.id.categoryImage)
-        val theCategoryText: TextView = adapterInflat.findViewById(R.id.categoryText)
+        val holder: ViewHolder
+
+        if(convertView == null){
+            println("This is my first time")
+            holder = ViewHolder()
+
+            adapterInflat = LayoutInflater.from(theContext).inflate(R.layout.list_row,null)
+            holder.newCategoryImage = adapterInflat.findViewById(R.id.categoryImage)
+            holder.newCategoryText = adapterInflat.findViewById(R.id.categoryText)
+            adapterInflat.tag = holder
+
+        }else {
+            println("Green I'm Recycled")
+            holder = convertView.tag as ViewHolder
+            adapterInflat = convertView
+        }
+
+    //----------  WE CREATE IT ONCE AND WE REUSE IT EVERY TIME IT SHOWS   --------------
+
+
         val category = theData[position]
 
         val resourceId = theContext.resources.getIdentifier(category.image,"drawable",theContext.packageName)
 
-        theCategoryText.text = category.title
-        theCategoryImage.setImageResource(resourceId)
+        holder.newCategoryText?.text = category.title
+        holder.newCategoryImage?.setImageResource(resourceId)
 
         return adapterInflat
     }
@@ -42,5 +61,10 @@ class CategoryAdapter(context: Context, data:List<Category>) : BaseAdapter() {
 
     override fun getCount(): Int {
         return theData.count()
+    }
+
+    private class ViewHolder {
+        var newCategoryImage: ImageView? = null
+        var newCategoryText: TextView? = null
     }
 }
