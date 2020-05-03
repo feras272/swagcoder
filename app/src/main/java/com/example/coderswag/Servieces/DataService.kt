@@ -12,7 +12,6 @@ object DataService {
         Category("DIGITAL","digitalgoodsimage")
 
     )
-
     val hats = listOf(
         Product("Devslopes Graphic Beanie","$18","hat01"),
         Product("Devslopes Hat black","$20","hat02"),
