@@ -11,13 +11,13 @@ import com.example.coderswag.Model.Category
 import com.example.coderswag.R
 
 
-class CategoryRecycleAdapter(val context: Context, val categories: List<Category>) : RecyclerView.Adapter<CategoryRecycleAdapter.Holder>() {
+class CategoryRecycleAdapter(val context: Context, val categories: List<Category>, val itemClick: (Category) -> Unit) : RecyclerView.Adapter<CategoryRecycleAdapter.Holder>() {
 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_row,parent,false)
-        return Holder(view)
+        return Holder(view, itemClick)
     }
 
     override fun getItemCount(): Int {
@@ -29,14 +29,18 @@ class CategoryRecycleAdapter(val context: Context, val categories: List<Category
 
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View, val itemClick: (Category) -> Unit) : RecyclerView.ViewHolder(itemView) {
         val holdCategoryImage = itemView.findViewById<ImageView>(R.id.categoryImage)
         val holdCategoryText = itemView.findViewById<TextView>(R.id.categoryText)
+
 
         fun bindCategory(category: Category, context: Context){
             val resouceID = context.resources.getIdentifier(category.image,"drawable", context.packageName)
             holdCategoryImage?.setImageResource(resouceID)
             holdCategoryText?.text = category.title
+            itemView.setOnClickListener {
+                itemClick(category)
+            }
 
         }
 
